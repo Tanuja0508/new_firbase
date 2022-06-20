@@ -1,5 +1,5 @@
-importScripts('https://www.gstatic.com/firebasejs/3.6.1/firebase-app.js');
-importScripts('https://www.gstatic.com/firebasejs/3.6.1/firebase-messaging.js');
+importScripts('https://www.gstatic.com/firebasejs/7.8.0/firebase-app.js');
+importScripts('https://www.gstatic.com/firebasejs/7.8.0/firebase-messaging.js');
 
 // Initialize the Firebase app in the service worker by passing in the
 // messagingSenderId.
@@ -44,6 +44,9 @@ const messaging = firebase.messaging();
 
 //   return self.registration.showNotification(title,
 //       notificationOptions);
+// });
+// messaging.onMessage((payload) => {
+//   console.log('Message received. ', payload);
 // });
 
 messaging.setBackgroundMessageHandler(function (payload) {

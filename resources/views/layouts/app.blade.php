@@ -164,7 +164,7 @@ main header h3{
 	color:#7e818a;
 }
 
-#chat{
+#chat1{
 	padding-left:0;
 	margin:0;
 	list-style-type:none;
@@ -173,18 +173,18 @@ main header h3{
 	border-top:2px solid #fff;
 	border-bottom:2px solid #fff;
 }
-#chat li{
+#chat1 li{
 	padding:10px 30px;
 }
-#chat h2,#chat h3{
+#chat1 h2,#chat1 h3{
 	display:inline-block;
 	font-size:13px;
 	font-weight:normal;
 }
-#chat h3{
+#chat1 h3{
 	color:#bbb;
 }
-#chat .entete{
+#chat1 .entete{
 	margin-bottom:5px;
 }
 #chat .message{
@@ -302,8 +302,9 @@ main footer a{
 
         <!-- Styles -->
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-		<script src="https://www.gstatic.com/firebasejs/7.14.6/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/7.14.6/firebase-messaging.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/7.8.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.24.0/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.24.0/firebase-database.js"></script>
         <!-- Scripts -->
         <script src="{{ asset('js/app.js') }}" defer></script>
         <!---------firbase---->
@@ -311,23 +312,7 @@ main footer a{
 
 <!-- Firebase App is always required and must be first -->
 
-        <script>
-
-  const firebaseConfig = {
-  apiKey: "AIzaSyB4jtkYgM8bqllAlTJqpwURkyAgT8ddYGc",
-  authDomain: "chat-app-4ca73.firebaseapp.com",
-  projectId: "chat-app-4ca73",
-  storageBucket: "chat-app-4ca73.appspot.com",
-  messagingSenderId: "1007604660125",
-  appId: "1:1007604660125:web:3f1301fffa4c8cc4dee174",
-  databaseURL: "https://chat-app-4ca73-default-rtdb.firebaseio.com"
-
-};
-
-
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-            </script>
+    
 
     </head>
     <body class="font-sans antialiased">

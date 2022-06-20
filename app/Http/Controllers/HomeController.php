@@ -18,8 +18,8 @@ class HomeController extends Controller
 {
 
 public function index(){
-    $chats=Chat::all();
-    return view('dashboard',compact('chats'));
+    $users=User::where('id', '!=' , auth()->user()->id)->get();
+    return view('dashboard',compact('users'));
 }
 
 

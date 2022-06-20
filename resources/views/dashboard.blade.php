@@ -4,57 +4,40 @@
             {{ __('Dashboard') }}
         </h2>
     </x-slot>
-    <div class="card-body">
-                        <!-- <div class="chat-container">
-                    
-                           <p class="chat chat-right">
-                               <b>A :</b><br>
-                                        message1                              </p>
-                                    <p class="chat chat-left">
-                                        <b>B :</b><br>
-                                        message 2
-                                    </p>
-                     
-
-
-                        </div> -->
-                        <div class="chat-container">
-    @if(count($chats)==0)
-        <p>There is no chat yet.</p>
-    @endif
-    @foreach($chats as $chat )
-        @if($chat->sender_id === auth()->user()->id)
-            <p class="chat chat-right">
-                <b>{{$chat->sender_name}} :</b><br>
-                {{$chat->message}}                                    </p>
-        @else
-            <p class="chat chat-left">
-                <b>{{$chat->sender_name}} :</b><br>
-                {{$chat->message}}
-            </p>
-        @endif
-    @endforeach
-
-
+	<div id="container">
+	<aside>
+		<!-- <header>
+			<input type="text" placeholder="search">
+		</header> -->
+		<ul>
+        @foreach($users as $user )
+			<li onclick="mssgdiv('{{$user->device_token}}','{{$user->id}}')">
+            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/chat_avatar_01.jpg" alt="">
+				<div>
+					<h2>{{$user->name}}</h2>
+					<h3>
+						<span class="status orange"></span>
+online					</h3>
+				</div>
+			</li>
+			@endforeach
+		</ul>
+	</aside>
+	<main>
+		<header class="chat1"  id="messages">
+			 <!-- <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/chat_avatar_01.jpg" alt=""> -->
+			<div>
+			<!-- <h2>Chat with Vincent Porter</h2>  -->
+				<h3>
+                    chat
+                </h3>
+			</div>
+			<!-- <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/ico_star.png" alt="">  -->
+		</header>
+		
+		
+	</main>
 </div>
-
-          
-
-                    </div>
-
-
-                    <div class="message-input-container">
-        <form action="" method="POST">
-            @csrf
-            <div class="form-group">
-                <label>Message</label>
-                <input type="text" name="message" class="form-control">
-            </div>
-            <div class="form-group">
-                <button type="submit" class="btn btn-primary">SEND MESSAGE</button>
-            </div>
-        </form>
-    </div>
 
 
     <!-- <div class="py-12">
@@ -71,122 +54,150 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   
-<!-- <script>
-
-
-const messaging = firebase.messaging();
-// messaging.usePublicVapidKey("BP_JEOiKXVqNqzoDT0FUDJeA6zwdG_mSOSLWS3IPZea-ttj0we9IUx5peZAVl_4CAyw0DO9eEJ_6cBxY91lH4xs");
-Notification.requestPermission().then((permission) => {
-              if (permission === 'granted') {
-                // navigator.serviceWorker.register('http://127.0.0.1:8000/firebase-messaging-sw.js')
-                getRegToken();
-}
-});
-	function getRegToken(argument) {
-		messaging.getToken()
-		  .then(function(currentToken) {
-		    if (currentToken) {
-		      saveToken(currentToken);
-		      console.log(currentToken);
-		      setTokenSentToServer(true);
-		    } else {
-		      console.log('No Instance ID token available. Request permission to generate one.');
-		      setTokenSentToServer(false);
-		    }
-		  })
-		  .catch(function(err) {
-		    console.log('An error occurred while retrieving token. ', err);
-		    setTokenSentToServer(false);
-		  });
-	}
-	function setTokenSentToServer(sent) {
-	    window.localStorage.setItem('sentToServer', sent ? 1 : 0);
-	}
-	function isTokenSentToServer() {
-	    return window.localStorage.getItem('sentToServer') == 1;
-	}
-	messaging.onMessage(function(payload) {
-	  console.log("Message received. ", payload);
-	  notificationTitle = payload.data.title;
-	  notificationOptions = {
-	  	body: payload.data.body,
-	  	icon: payload.data.icon,
-	  	image:  payload.data.image
-	  };
-	  var notification = new Notification(notificationTitle,notificationOptions);
-	});
-  </script> 
- -->
 <script>
-    const messaging = firebase.messaging();
-    messaging.usePublicVapidKey("BP_JEOiKXVqNqzoDT0FUDJeA6zwdG_mSOSLWS3IPZea-ttj0we9IUx5peZAVl_4CAyw0DO9eEJ_6cBxY91lH4xs");
-
-    function sendTokenToServer(fcm_token) {
-        // alert('sdfghjk');
-            const user_id = '{{auth()->user()->id}}';
-            console.log(fcm_token);
-            // console.log(user_id);
-
-            axios.post('/api/save-token', {
-                fcm_token, user_id
-            })
-                .then(res => {
-                    console.log(res);
-                })
-
-        }
-
-        function retreiveToken(){
-            messaging.getToken().then((currentToken) => {
-                if (currentToken) {
-                    sendTokenToServer(currentToken);
-                    // updateUIForPushEnabled(currentToken);
-                } else {
-                    // Show permission request.
-                    //console.log('No Instance ID token available. Request permission to generate one.');
-                    // Show permission UI.
-                    //updateUIForPushPermissionRequired();
-                    //etTokenSentToServer(false);
-                    alert('You should allow notification!');
-                }
-            }).catch((err) => {
-                console.log(err);
-                // showToken('Error retrieving Instance ID token. ', err);
-                // setToackenSentToServer(false);
-            });
-        }
-        retreiveToken();
-        messaging.onTokenRefresh(()=>{
-            retreiveToken();
+const firebaseConfig = {
+  apiKey: "AIzaSyB4jtkYgM8bqllAlTJqpwURkyAgT8ddYGc",
+  authDomain: "chat-app-4ca73.firebaseapp.com",
+  databaseURL: "https://chat-app-4ca73-default-rtdb.firebaseio.com",
+  projectId: "chat-app-4ca73",
+  storageBucket: "chat-app-4ca73.appspot.com",
+  messagingSenderId: "1007604660125",
+  appId: "1:1007604660125:web:3f1301fffa4c8cc4dee174",
+  measurementId: "G-NBKLX3YWWP"
+};
+firebase.initializeApp(firebaseConfig);
 
 
-        });
-        messaging.onMessage(function(payload) {
-            console.log('sdfghjk')
-console.log(payload);
-});
+let name="";
+// function init() {
+//   name = prompt("Please enter your name");
+// //   msgRef1.on('child_added', updateMsgs);
 
-    //     messaging.onMessage((payload)=>{
-    //         alert('dfghjk');
-    //         console.log('Message received');
-    //         console.log(payload);
-    //         location.reload();
-    // //         var notify;
-    // // notify = new Notification(payload.notification.title,{
-    // //     body: payload.notification.body,
-    // //     icon: payload.notification.icon,
-    // //     tag: "Dummy"
-    // // });
-    // // console.log(payload.notification);
-
-    //         // location.reload();
-    //     });
+// }
+// document.addEventListener('DOMContentLoaded', init);
 
 
-
-    //firebase.initializeApp(config);
-
+const db = firebase.database();
 
     </script>
+    <script>
+        function mssgdiv(token,id)
+        
+        {
+
+
+
+            $.ajaxSetup({
+             headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+               }
+              });
+
+            $.ajax({
+                type:"POST",
+                url:"/get_chat_data",
+                data:{rec_id:id},
+                success:function(response){
+                    var res= " " ;
+                    var data=JSON.parse(response);
+                    // console.log(data);
+                   res +='<ul id="chat">';
+//                  console.log(data.message);
+                    $(data).each(function(i,val){
+                        // res +='<li class="you">'+
+                        // '<div class="entete">'+
+                        //     '<span class="status green"></span>'+
+                        //     '<h2>'+val.sender_name+'</h2>'+
+                        //     '<h3>10:12AM, Today</h3>'+
+                        // '</div>'+
+                        // '<div class="triangle"></div>'+
+                        // '<div class="message">'+val.message+'</div>'+
+                        // '</li>';
+                    });
+                    // res +='</ul>';
+                   res += '<footer>'+
+        '<form id="messageForm">'+
+            '@csrf'+
+			'<textarea placeholder="Type your message"  id="msg-input"></textarea>'+
+            '<input type="hidden" id="sender_id">'+
+			'<button type="submit" id="msg-btn">Send</button>'+
+           '</form>'+
+		'</footer>';
+        $('.chat1').html(res);
+        $('#sender_id').val(id);
+
+        const msgForm = document.getElementById("messageForm"); //the input form
+        const msgInput = document.getElementById("msg-input"); //the input element to write messages
+        const msgBtn = document.getElementById("msg-btn"); //the Send button
+        msgForm.addEventListener('submit', sendMessage);
+        const sender_id=$('#sender_id').val();
+
+const msgRef = db.ref("/msgs/"+{{Auth::user()->id}}*sender_id); 
+
+        msgRef.on('child_added', updateMsgs);
+
+
+
+          } 
+            });
+
+
+           
+   }
+
+
+
+
+   
+
+const updateMsgs = data =>{
+// alert('hello');
+const msgScreen = document.getElementById("messages"); //the <ul> that displays all the <li> msgs
+
+  const {sendername, text} = data.val(); //get name and text
+
+	console.log(sendername);
+
+  //load messages, display on left if not the user's name. Display on right if it is the user.
+  const msg = '<ul id="chat"><li class="you">'+
+                        '<div class="entete">'+
+                            '<span class="status green"></span>'+
+                            '<h2>'+sendername+'</h2>'+
+                            '<h3>10:12AM, Today</h3>'+
+                        '</div>'+
+                        '<div class="triangle"></div>'+
+                        '<div class="message">'+text+'</div>'+
+                        '</li></ul>';
+
+
+  $('#messages').prepend(msg);//add the <li> message to the chat window
+
+  //auto scroll to bottom
+//   document.getElementById("chat-window").scrollTop = document.getElementById("chat-window").scrollHeight;
+}
+
+
+
+         //databse_add code
+        function sendMessage(e){
+
+            const sender_id=$('#sender_id').val();
+            const msgRef = db.ref("/msgs/"+{{Auth::user()->id}}*sender_id); 
+
+        e.preventDefault();
+        const text = $("#msg-input").val();
+         const uname='{{Auth::user()->name}}';
+
+        if(!text.trim()) return alert('Please type a message'); //no msg submitted
+        const msg = {
+        sendername: uname,
+        text: text
+         };
+
+    msgRef.push(msg);
+    $("#msg-input").val();
+}
+
+        </script>
 @endsection
 </x-app-layout>

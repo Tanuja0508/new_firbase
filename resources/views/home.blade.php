@@ -109,13 +109,14 @@ online					</h3>
 //                 new Notification(noteTitle, noteOptions);
 
 // });
-      messaging.onMessage((payload) => {
-    console.log('Message received. ', payload);
-      });
+messaging.onMessage(function({data:{body,title}}){
+    console.log('jhghjgfhjsg')
+        new Notification(title, {body});
+    });
 
 
 
-
+`
     //   IntitalizeFireBaseMessaging();
     //  function IntitalizeFireBaseMessaging() {
     //     messaging
@@ -162,7 +163,7 @@ online					</h3>
     //         .catch(function (reason) {
     //             console.log(reason);
     //         })
-    // })
+    // })`
 
     </script>
     <script>
