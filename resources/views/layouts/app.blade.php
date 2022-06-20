@@ -33,6 +33,7 @@ body{
 	background-color:#abd9e9;
 	font-family:Arial;
 }
+
 #container{
 	width:750px;
 	height:800px;

@@ -101,7 +101,7 @@ const db = firebase.database();
                     var res= " " ;
                     var data=JSON.parse(response);
                     // console.log(data);
-                   res +='<ul id="chat">';
+                 
 //                  console.log(data.message);
                     $(data).each(function(i,val){
                         // res +='<li class="you">'+
