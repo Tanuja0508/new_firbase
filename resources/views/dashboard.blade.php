@@ -132,7 +132,7 @@ const db = firebase.database();
         msgForm.addEventListener('submit', sendMessage);
         const sender_id=$('#sender_id').val();
 
-const msgRef = db.ref("/msgs/"+{{Auth::user()->id}}*sender_id); 
+const msgRef = db.ref("/msgs/"+{{Auth::user()->id}}*sender_id).orderByChild('text'); 
 
         msgRef.on('child_added', updateMsgs);
 
